@@ -239,10 +239,6 @@ input {
   letter-spacing: 2px;
   cursor: pointer;
 }
-.see-stats {
-  /* margin-top: auto; */
-  /* margin: 2em 0; */
-}
 .user-stats {
   position: relative;
   background: #f6f6f7;
