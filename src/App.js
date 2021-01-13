@@ -22,11 +22,12 @@ const App = () => {
   const [text, setText] = useState(null);
   const [input, setInput] = useState("");
   const [curWord, setCurWord] = useState("");
-  const [word, setWord] = useState(0);
-  const [char, setChar] = useState(0);
+  const [wordCount, setWordCount] = useState(0);
+  const [charCount, setCharCount] = useState(0);
   const [done, setDone] = useState([]);
   const [started, setStarted] = useState(false);
   const [timer, setTimer] = useState(60);
+  const [wordStart, setWordStart] = useState(true);
   const inputRef = useRef(null);
   useEffect(() => {
     let dummyText = data.split(" ");
@@ -47,41 +48,33 @@ const App = () => {
       });
     }, 1000);
   };
-
   const handleChange = (e) => {
-    if (e.target.value.indexOf(" ") >= 0) {
-      // let prevDoneWords = done;
-      // prevDoneWords.unshift();
-      // setDone(prevDoneWords);
-      // setInput("");
-      return;
-    }
     if (!started) {
       startTimer();
     }
-    let d = e.target.value;
-    let doneWords = done;
-    let doneLength = done.length;
-
+    if (e.target.value.indexOf(" ") >= 0) {
+      return;
+    }
+    let inputText = e.target.value;
     let pendingWord = curWord;
-    pendingWord = pendingWord.substring(getCountOfSame(d, pendingWord));
+    pendingWord = pendingWord.substring(getCountOfSame(inputText, pendingWord));
     console.log(pendingWord);
-    let words = text;
-    words[0] = pendingWord;
-    setText(words);
-    if (curWord.startsWith(d)) {
-      if (doneLength > 0) {
-        doneWords[doneLength - 1] = { word: d, correct: true };
-      } else {
-        doneWords[0] = { word: d, correct: true };
-      }
+    let pendingWords = text;
+    pendingWords[0] = pendingWord;
+    setText(pendingWords);
+    let doneWords = [...done];
+    if (wordStart) {
+      setWordStart(false);
+      doneWords.push({
+        word: inputText,
+        correct: curWord.startsWith(inputText),
+      });
       setDone(doneWords);
     } else {
-      if (doneLength > 0) {
-        doneWords[doneLength - 1] = { word: d, correct: false };
-      } else {
-        doneWords[0] = { word: d, correct: false };
-      }
+      doneWords[doneWords.length - 1] = {
+        word: inputText,
+        correct: curWord.startsWith(inputText),
+      };
       setDone(doneWords);
     }
     setInput(e.target.value);
@@ -89,60 +82,30 @@ const App = () => {
 
   const handleSpacePress = (e) => {
     if (e.key === " ") {
-      console.log("space pressed");
-      let w = {};
-
-      let doneWords = done;
-      doneWords.unshift();
-      setDone(done);
-      w.word = input.trim();
-      if (input.trim() === curWord.trim()) {
-        w.correct = true;
-        setWord((prev) => prev + 1);
-        setChar((prev) => prev + input.trim().length);
+      if (input.indexOf(" ") >= 0) {
+        return;
       }
-      if (!w.correct) {
-        w.correct = false;
+      if (input !== curWord) {
+        let doneWords = done;
+        let doneLength = doneWords.length;
+        doneWords[doneLength - 1] = {
+          word: doneWords[doneLength - 1].word,
+          correct: false,
+        };
+        setDone(doneWords);
+      } else {
+        setWordCount((prev) => prev + 1);
+        setCharCount((prev) => prev + done[done.length - 1].word.length);
       }
-      // let doneWords = done;
-      // doneWords.unshift();
-      // doneWords.push(w);
-      setDone((prev) => [...prev, w]);
-      // setDone(doneWords);
-      let data = text;
-      data.shift();
-      setText(data);
+      const pendingWords = text;
+      pendingWords.shift();
+      setText(pendingWords);
       setInput("");
-      setCurWord(text[0]);
+      setWordStart(true);
+      setCurWord(pendingWords[0]);
+      setDone((prev) => [...prev, { word: "", correct: true }]);
     }
   };
-
-  // const handleSpacePress = (e) => {
-  //   if (e.key === " ") {
-  //     if (input === "" || input === " ") return;
-  //     // if (input.trim() === "") {
-  //     //   setInput("");
-  //     //   return;
-  //     // }
-  //     let w = {};
-  //     w.word = input.trim();
-  //     if (input.trim() === curWord.trim()) {
-  //       w.correct = true;
-  //       setWord((prev) => prev + 1);
-  //       setChar((prev) => prev + input.trim().length);
-  //     }
-  //     if (!w.correct) {
-  //       w.correct = false;
-  //     }
-  //     setDone((prev) => [...prev, w]);
-  //     let data = text;
-  //     data.shift();
-  //     setText(data);
-  //     setInput("");
-  //     setIndex((prev) => prev + 1);
-  //     setCurWord(text[0]);
-  //   }
-  // };
 
   return (
     <>
@@ -175,8 +138,8 @@ const App = () => {
         </div>
       </div>
       <h1>{curWord}</h1>
-      <h1>word/min: {word}</h1>
-      <h1>char/min: {char}</h1>
+      <h1>word/min: {wordCount}</h1>
+      <h1>char/min: {charCount}</h1>
       <h1>time: {timer}</h1>
     </>
   );
