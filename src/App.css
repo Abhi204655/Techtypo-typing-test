@@ -5,21 +5,145 @@
 }
 .App {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+}
+.navbar {
+  width: 100%;
+  height: 100px;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.navbar h1 {
+  letter-spacing: 3px;
+  font-weight: normal;
+}
+.typing-section {
+  width: 100%;
+  height: calc(100vh - 100px);
+  background: #f6f6f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#small-intro {
+  font-size: 1em;
+  color: hsl(240, 8%, 31%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 2px;
+}
+#big-intro {
+  color: hsl(240, 8%, 12%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* letter-spacing: 2px; */
+  font-size: 4em;
+  font-weight: bolder;
+}
+.stats {
+  margin: 3em 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.stats h1 {
+  font-weight: bolder;
+  font-size: 3em;
+  color: hsl(240, 8%, 12%);
+}
+.stats p {
+  color: hsl(240, 8%, 12%);
+  font-size: 1em;
+}
+.timer {
+  width: 150px;
+  height: 150px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid yellow;
+}
+.counts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5em;
+}
+.count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.count > div {
+  width: 120px;
+  height: 120px;
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.count p {
+  margin-top: 0.5em;
 }
 .typing {
-  /* height: 100%; */
+  width: 68%;
+  margin: 1em auto;
+  background: #ffffff;
+  box-shadow: 0 9px 24px rgba(0, 0, 0, 0.12), 0 9px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+  /* font-size: 3em; */
+}
+input {
+  outline: none;
+  border: none;
+  width: 2px;
+  background: #f6f6f7;
+  font-size: 3em;
+}
+.done {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  align-self: flex-end;
+  gap: 0.2em;
+  font-size: 3em;
+  color: #ababb0;
+}
+.doing {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  gap: 0.2em;
+  font-size: 3em;
+  color: #1b1b20;
+}
+/* .typing {
   width: 100%;
   background: yellow;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 3em;
-}
-.done {
+} */
+/* .done {
   flex: 1;
   display: flex;
   align-items: center;
@@ -36,10 +160,4 @@
   overflow: hidden;
   gap: 0.2em;
 }
-input {
-  outline: none;
-  border: none;
-  width: 2px;
-  background: yellow;
-  font-size: 1em;
-}
+*/
