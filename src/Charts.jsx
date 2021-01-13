@@ -4,11 +4,10 @@ import { globalScores } from "./data";
 
 const Charts = () => {
   const userStats = JSON.parse(localStorage.getItem("userstats"));
-  console.log([...userStats.map((user) => user.wordCount)]);
 
   const getFullDateTime = (datetime) => {
     let d = new Date(datetime);
-    return d.getDate();
+    return d.getDate() + "-" + d.getMonth() + 1 + "-" + d.getFullYear();
   };
   const options1 = {
     chart: {
@@ -34,10 +33,12 @@ const Charts = () => {
       show: false,
     },
     xaxis: {
-      categories: [...userStats.map((user) => getFullDateTime(user.dateTime))],
-      // labels: {
-      //   show: false,
-      // },
+      categories: userStats && [
+        ...userStats.map((user) => getFullDateTime(user.dateTime)),
+      ],
+      labels: {
+        show: false,
+      },
     },
     yaxis: {
       // labels: {
@@ -91,7 +92,7 @@ const Charts = () => {
   const series1 = [
     {
       name: "WPM",
-      data: [...userStats.map((user) => user.wordCount)],
+      data: userStats && [...userStats.map((user) => user.wordCount)],
     },
   ];
   const series2 = [
@@ -102,7 +103,13 @@ const Charts = () => {
   ];
   return (
     <>
-      <Chart options={options1} series={series1} type="line" />
+      {userStats ? (
+        <Chart options={options1} series={series1} type="line" />
+      ) : (
+        <div>
+          <h1 style={{ textAlign: "center" }}>No userstat Available</h1>
+        </div>
+      )}
       <Chart options={options2} series={series2} type="bar" />
     </>
   );

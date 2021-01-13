@@ -84,9 +84,11 @@ const App = () => {
             setErrorCount={setErrorCount}
             setAccuracy={setAccuracy}
           />
-          <div className="see-stats">See Stats</div>
+          {/* <div className="see-stats">See Stats</div> */}
         </div>
         <div className="user-stats">
+          <div className="splash-left"></div>
+          <div className="splash-right"></div>
           <Charts />
         </div>
       </div>

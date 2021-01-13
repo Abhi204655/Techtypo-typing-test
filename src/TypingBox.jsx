@@ -41,7 +41,6 @@ function TypingBox({
     setText(dummyText);
     setCurWord(dummyText[0]);
     inputRef.current.focus();
-    console.log(localStorage.getItem("userstats"));
   }, []);
 
   useEffect(() => {
