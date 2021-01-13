@@ -15,9 +15,29 @@
   height: 100px;
   background: #ffffff;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+.navbar h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.3em 1em;
+}
+.navbar h1 span {
+  font-weight: bolder;
+}
+.timer-bar {
+  /* width: 100%; */
+  align-self: flex-start;
+  height: 4px;
+  background: yellow;
+  margin-top: auto;
+  transition: 0.1s linear;
 }
 .navbar h1 {
   letter-spacing: 3px;
@@ -168,18 +188,23 @@ input {
   outline: none;
   border: none;
   max-width: 80vw;
-  width: 30vw;
-  height: 350px;
+  width: 40vw;
+  min-height: 350px;
   border-radius: 10px;
   background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 2em;
+  gap: 3em;
+}
+.left-modal {
+  flex: 1;
 }
 .right-modal {
   align-self: flex-start;
   margin: 2em 0;
+  flex: 2;
 }
 .right-modal h2 {
   font-size: 3em;
@@ -202,4 +227,21 @@ input {
   font-weight: bolder;
   letter-spacing: 2px;
   cursor: pointer;
+}
+.see-stats {
+  /* margin-top: auto; */
+  /* margin: 2em 0; */
+}
+.user-stats {
+  background: #f6f6f7;
+  width: 100%;
+  padding: 0 10%;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3em;
+}
+.user-stats div {
+  flex: 1;
 }

@@ -24,6 +24,10 @@ function TypingBox({
   handleOpen,
   restart,
   setRestart,
+  setErrorCount,
+  errorCount,
+  wordCount,
+  setAccuracy,
 }) {
   const [text, setText] = useState(null);
   const [input, setInput] = useState("");
@@ -37,6 +41,7 @@ function TypingBox({
     setText(dummyText);
     setCurWord(dummyText[0]);
     inputRef.current.focus();
+    console.log(localStorage.getItem("userstats"));
   }, []);
 
   useEffect(() => {
@@ -51,7 +56,7 @@ function TypingBox({
       setWordStart(true);
       setRestart(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restart]);
 
   const startTimer = () => {
@@ -102,6 +107,7 @@ function TypingBox({
       if (inputRef.current.value === "") {
         return;
       }
+      let e, w;
       if (input !== curWord) {
         let doneWords = done;
         let doneLength = doneWords.length;
@@ -109,9 +115,24 @@ function TypingBox({
           word: doneWords[doneLength - 1].word,
           correct: false,
         };
+        e = errorCount;
+        w = wordCount;
+        setErrorCount((prev) => prev + 1);
+        if (wordCount > 0) {
+          setAccuracy(Math.floor((w / (e + w + 1)) * 100));
+        } else {
+          setAccuracy(0);
+        }
         setDone(doneWords);
       } else {
         setWordCount((prev) => prev + 1);
+        e = errorCount;
+        w = wordCount;
+        if (wordCount > 0) {
+          setAccuracy(Math.floor(((w + 1) / (e + w + 1)) * 100));
+        } else {
+          setAccuracy(0);
+        }
         setCharCount((prev) => prev + done[done.length - 1].word.length);
       }
       const pendingWords = text;

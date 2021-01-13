@@ -7,13 +7,16 @@ import Modal from "@material-ui/core/Modal";
 import Turtle from "./assets/turtle.svg";
 import Trex from "./assets/dino.svg";
 import Octopus from "./assets/octopus.svg";
+import Charts from "./Charts";
 
 const App = () => {
   const [wordCount, setWordCount] = useState(0);
+  const [errorCount, setErrorCount] = useState(0);
   const [charCount, setCharCount] = useState(0);
   const [timer, setTimer] = useState(60);
   const [open, setOpen] = useState(false);
   const [restart, setRestart] = useState(false);
+  const [accuracy, setAccuracy] = useState(100);
 
   const getIdentity = () => {
     if (wordCount <= 30) {
@@ -24,7 +27,6 @@ const App = () => {
       return "Octopus";
     }
   };
-
   const getImage = () => {
     if (wordCount <= 30) {
       return Turtle;
@@ -48,7 +50,15 @@ const App = () => {
       <CssBaseline />
       <div className="App">
         <div className="navbar">
-          <h1>TECHTYPO</h1>
+          <h1>
+            TECH<span>TYPO</span>
+          </h1>
+          <div
+            className="timer-bar"
+            style={{
+              width: `${(timer / 60) * 100}%`,
+            }}
+          ></div>
         </div>
         <div className="typing-section">
           <div className="splash-left"></div>
@@ -56,15 +66,28 @@ const App = () => {
 
           <h4 id="small-intro">TYPING SPEED TEST</h4>
           <h1 id="big-intro">Test Your Typing Sklils</h1>
-          <Stats wordCount={wordCount} charCount={charCount} timer={timer} />
+          <Stats
+            wordCount={wordCount}
+            charCount={charCount}
+            timer={timer}
+            accuracy={accuracy}
+          />
           <TypingBox
+            wordCount={wordCount}
             setWordCount={setWordCount}
             setCharCount={setCharCount}
             setTimer={setTimer}
             handleOpen={handleOpen}
             restart={restart}
             setRestart={setRestart}
+            errorCount={errorCount}
+            setErrorCount={setErrorCount}
+            setAccuracy={setAccuracy}
           />
+          <div className="see-stats">See Stats</div>
+        </div>
+        <div className="user-stats">
+          <Charts />
         </div>
       </div>
       <Modal
@@ -87,7 +110,7 @@ const App = () => {
               <span>
                 {wordCount} WPM ({charCount} CPM)
               </span>
-              . Your accuracy was 81%.{" "}
+              . Your accuracy was {accuracy}%.{" "}
               {getIdentity() === "Octopus"
                 ? "Keep Practicing."
                 : "It could be better!"}
@@ -97,8 +120,27 @@ const App = () => {
                 setCharCount(0);
                 setWordCount(0);
                 setTimer(60);
+                setAccuracy(100);
                 setRestart(true);
                 handleClose();
+
+                let userStats = localStorage.getItem("userstats");
+                if (userStats) {
+                  let newUserStats = [
+                    ...JSON.parse(userStats),
+                    { dateTime: new Date(), wordCount },
+                  ];
+                  console.log(newUserStats);
+                  localStorage.setItem(
+                    "userstats",
+                    JSON.stringify(newUserStats)
+                  );
+                } else {
+                  userStats = [];
+                  userStats.push({ dateTime: new Date(), wordCount });
+                  console.log(userStats);
+                  localStorage.setItem("userstats", JSON.stringify(userStats));
+                }
               }}
             >
               Restart

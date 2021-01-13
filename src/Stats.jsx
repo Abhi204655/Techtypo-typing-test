@@ -1,6 +1,6 @@
 import React from "react";
 
-function Stats({ wordCount, charCount, timer }) {
+function Stats({ wordCount, charCount, timer, accuracy }) {
   return (
     <div className="stats">
       <div className="timer">
@@ -22,9 +22,9 @@ function Stats({ wordCount, charCount, timer }) {
         </div>
         <div className="count">
           <div>
-            <h1>{charCount}</h1>
+            <h1>{accuracy}</h1>
           </div>
-          <p>Chars/min</p>
+          <p>% accuracy</p>
         </div>
       </div>
     </div>
