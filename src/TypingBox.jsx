@@ -17,15 +17,19 @@ const getCountOfSame = (s1, s2) => {
   return count;
 };
 
-function TypingBox({ setWordCount, setCharCount, setTimer }) {
+function TypingBox({
+  setWordCount,
+  setCharCount,
+  setTimer,
+  handleOpen,
+  restart,
+  setRestart,
+}) {
   const [text, setText] = useState(null);
   const [input, setInput] = useState("");
   const [curWord, setCurWord] = useState("");
-  //   const [wordCount, setWordCount] = useState(0);
-  //   const [charCount, setCharCount] = useState(0);
   const [done, setDone] = useState([]);
   const [started, setStarted] = useState(false);
-  //   const [timer, setTimer] = useState(60);
   const [wordStart, setWordStart] = useState(true);
   const inputRef = useRef(null);
   useEffect(() => {
@@ -35,12 +39,27 @@ function TypingBox({ setWordCount, setCharCount, setTimer }) {
     inputRef.current.focus();
   }, []);
 
+  useEffect(() => {
+    if (restart) {
+      let dummyText = data.split(" ");
+      setText(dummyText);
+      setInput("");
+      setCurWord(dummyText[0]);
+      inputRef.current.focus();
+      setDone([]);
+      setStarted(false);
+      setWordStart(true);
+      setRestart(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [restart]);
+
   const startTimer = () => {
     setStarted(true);
     const interval = setInterval(() => {
       setTimer((prev) => {
         if (prev === 0) {
-          alert("finished");
+          handleOpen();
           clearInterval(interval);
         }
         return prev - 1;
@@ -112,7 +131,6 @@ function TypingBox({ setWordCount, setCharCount, setTimer }) {
             <span
               key={i}
               style={{
-                // color: `${item.correct ? "green" : "red"}`,
                 textDecoration: `${item.correct ? "none" : "line-through"}`,
               }}
             >

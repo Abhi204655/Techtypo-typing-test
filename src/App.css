@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+*::selection {
+  background: yellow;
+}
 .App {
   width: 100%;
   min-height: 100vh;
@@ -28,6 +31,28 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: relative;
+  z-index: 10;
+}
+.splash-left {
+  position: absolute;
+  width: 30%;
+  height: calc(100vh - 100px);
+  top: 0;
+  left: 0;
+  background: url("./assets/test-bg-left.png");
+  background-size: 100%;
+  z-index: -1;
+}
+.splash-right {
+  position: absolute;
+  width: 30%;
+  height: calc(100vh - 100px);
+  top: 0;
+  right: 0;
+  background: url("./assets/test-bg-right.png");
+  background-size: 100%;
+  z-index: -1;
 }
 #small-intro {
   font-size: 1em;
@@ -96,7 +121,7 @@
   margin-top: 0.5em;
 }
 .typing {
-  width: 68%;
+  width: 60%;
   margin: 1em auto;
   background: #ffffff;
   box-shadow: 0 9px 24px rgba(0, 0, 0, 0.12), 0 9px 24px rgba(0, 0, 0, 0.12);
@@ -135,29 +160,46 @@ input {
   font-size: 3em;
   color: #1b1b20;
 }
-/* .typing {
-  width: 100%;
-  background: yellow;
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  outline: none;
+  border: none;
+  max-width: 80vw;
+  width: 30vw;
+  height: 350px;
+  border-radius: 10px;
+  background: #ffffff;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 2em;
+}
+.right-modal {
+  align-self: flex-start;
+  margin: 2em 0;
+}
+.right-modal h2 {
   font-size: 3em;
-} */
-/* .done {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  overflow: hidden;
-  align-self: flex-end;
-  gap: 0.2em;
+  font-weight: bolder;
 }
-.doing {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  overflow: hidden;
-  gap: 0.2em;
+.right-modal p {
+  font-size: 1.2em;
 }
-*/
+.right-modal p span {
+  font-weight: bolder;
+}
+.right-modal button {
+  outline: none;
+  border: none;
+  background: yellow;
+  padding: 1em 2em;
+  width: 100%;
+  margin: 1em 0;
+  font-size: 1.4em;
+  font-weight: bolder;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
