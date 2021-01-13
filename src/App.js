@@ -58,7 +58,6 @@ const App = () => {
     let inputText = e.target.value;
     let pendingWord = curWord;
     pendingWord = pendingWord.substring(getCountOfSame(inputText, pendingWord));
-    console.log(pendingWord);
     let pendingWords = text;
     pendingWords[0] = pendingWord;
     setText(pendingWords);
@@ -82,7 +81,7 @@ const App = () => {
 
   const handleSpacePress = (e) => {
     if (e.key === " ") {
-      if (input.indexOf(" ") >= 0) {
+      if (inputRef.current.value === "") {
         return;
       }
       if (input !== curWord) {
