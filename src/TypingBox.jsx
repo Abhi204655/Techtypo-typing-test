@@ -72,6 +72,16 @@ function TypingBox({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restart]);
 
+  // useEffect(() => {
+  //   if (text && text.length <= 10) {
+  //     console.log("words are less");
+  //     // let newData = [...text, ...getRandom(words, 5)];
+  //     // // setText((prev) => [...prev, ...getRandom(words, 5)]);
+  //     // setText(newData);
+  //     // console.log(newData);
+  //   }
+  // }, [text]);
+
   const startTimer = () => {
     setStarted(true);
     const interval = setInterval(() => {
