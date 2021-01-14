@@ -65,7 +65,7 @@ const App = () => {
           <div className="splash-right"></div>
 
           <h4 id="small-intro">TYPING SPEED TEST</h4>
-          <h1 id="big-intro">Test Your Typing Sklils</h1>
+          <h1 id="big-intro">Test Your Typing Skills</h1>
           <Stats
             wordCount={wordCount}
             charCount={charCount}
