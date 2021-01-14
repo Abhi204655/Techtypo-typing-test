@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { data } from "./data";
+import { words } from "./words";
 
 const getCountOfSame = (s1, s2) => {
   let n = s1.length;
@@ -15,6 +15,20 @@ const getCountOfSame = (s1, s2) => {
     i++;
   }
   return count;
+};
+
+const getRandom = (arr, n) => {
+  var result = new Array(n),
+    len = arr.length,
+    taken = new Array(len);
+  if (n > len)
+    throw new RangeError("getRandom: more elements taken than available");
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
 };
 
 function TypingBox({
@@ -37,7 +51,7 @@ function TypingBox({
   const [wordStart, setWordStart] = useState(true);
   const inputRef = useRef(null);
   useEffect(() => {
-    let dummyText = data.split(" ");
+    let dummyText = getRandom(words, 300);
     setText(dummyText);
     setCurWord(dummyText[0]);
     inputRef.current.focus();
@@ -45,7 +59,7 @@ function TypingBox({
 
   useEffect(() => {
     if (restart) {
-      let dummyText = data.split(" ");
+      let dummyText = getRandom(words, 300);
       setText(dummyText);
       setInput("");
       setCurWord(dummyText[0]);
